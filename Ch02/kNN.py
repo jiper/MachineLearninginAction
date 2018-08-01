@@ -7,7 +7,12 @@ Created on Sat Feb 24 15:39:38 2018
 #from numpy import *
 import numpy as np
 import operator
+import matplotlib
+import matplotlib.pyplot as plt
 from os import listdir
+
+plt.rcParams['font.sans-serif'] = ['SimHei'] # 步骤一（替换sans-serif字体）
+plt.rcParams['axes.unicode_minus'] = False   # 步骤二（解决坐标轴负数的负号显示问题）
 
 def createDataSet():
     group = np.array ([[1.0,1.1],[1.0,1.0],[0,0],[0,0.1]])
@@ -46,6 +51,14 @@ def file2matrix(filename):
             
    
 if __name__ =='__main__':
-    D,L = file2matrix("datingTestSet2.txt")
-   
+    datingDataMat,datingLabels = file2matrix("datingTestSet2.txt")
+    fig = plt.figure()    
+    ax = fig.add_subplot(111)
+    plt.xlabel(r'飞行')  
+    plt.ylabel(r'冰')  
+    plt.legend('x1') 
+    ax.scatter(datingDataMat[:,1],datingDataMat[:,2],15.0*np.array(datingLabels),15.0*np.array(datingLabels))
+    ax.set_title(r"散点图")
+    plt.legend('x1') 
+    plt.show()
     
