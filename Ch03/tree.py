@@ -37,8 +37,20 @@ def createDataSet():
     labels = ['no surfacing','flippers']
     return dataSet,labels
 
+def splitDataSet(dataSet,axis,value):   #划分数据集
+    TargetDataList= []
+    TargetData = []
+    for SingleData in dataSet:
+        if (SingleData[axis]==value):
+            TargetData = SingleData[:axis]
+            TargetData.extend(SingleData[axis+1:])
+            TargetDataList.append(TargetData)
+    return TargetDataList
+        
+
+
 #==============================================================================
-# def splitDataSet(dataSet,axis,value):   #划分数据集
+
 # def chooseBestFeatureToSSplit(dataSet):  #选择最好的划分方式
 # def majorityCnt(classList):  #多数表决
 # def createTree(dataSet,labels):
@@ -49,3 +61,5 @@ if __name__ == "__main__":
     dataSet,Labels = createDataSet()
     Entropy = calcShannonEnt(dataSet)
     print (Entropy)
+    TargetDataList =splitDataSet(dataSet,0,0)
+    print (TargetDataList)
