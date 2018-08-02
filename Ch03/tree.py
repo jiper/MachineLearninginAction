@@ -7,8 +7,26 @@ Created on Wed Aug  1 09:17:51 2018
 
 from numpy import *
 import numpy as np
-#def calcShannonEnt (dataSet):
-    
+import math
+
+def calcShannonEnt (dataSet):
+    SampleLen = len(dataSet)
+    Entropy = 0.0
+    categoryList =np. array(dataSet)[:,2]
+    categorySet = set(categoryList)
+    ProbDic ={}
+    for category in categorySet:
+        ProbDic[category]=0
+    for data in dataSet:
+        for category in categorySet:
+            if data[-1]==category:
+                ProbDic[category]= ProbDic[category]+1
+                continue
+    for value in ProbDic.values():
+         probability = float(value)/SampleLen
+         Entropy = Entropy + probability*math.log2(probability)
+    Entropy = -Entropy
+    return Entropy
     
 def createDataSet():
     dataSet = [[1,1,'yes'],
@@ -19,7 +37,15 @@ def createDataSet():
     labels = ['no surfacing','flippers']
     return dataSet,labels
 
+#==============================================================================
+# def splitDataSet(dataSet,axis,value):   #划分数据集
+# def chooseBestFeatureToSSplit(dataSet):  #选择最好的划分方式
+# def majorityCnt(classList):  #多数表决
+# def createTree(dataSet,labels):
+#==============================================================================
 
-dataSet,Labels = createDataSet()
-SampleLen = len(dataSet)
-category =np. array(dataSet)[:,2]
+
+if __name__ == "__main__":
+    dataSet,Labels = createDataSet()
+    Entropy = calcShannonEnt(dataSet)
+    print (Entropy)
