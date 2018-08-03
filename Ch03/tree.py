@@ -12,7 +12,7 @@ import math
 def calcShannonEnt (dataSet):
     SampleLen = len(dataSet)
     Entropy = 0.0
-    categoryList =np. array(dataSet)[:,2]
+    categoryList =np. array(dataSet)[:,-1]
     categorySet = set(categoryList)
     ProbDic ={}
     for category in categorySet:
@@ -47,7 +47,30 @@ def splitDataSet(dataSet,axis,value):   #划分数据集
             TargetDataList.append(TargetData)
     return TargetDataList
         
-
+def chooseBestFeatureToSplit(dataSet):  #选择最好的划分方式
+    FeatureSum = len(dataSet[0])-1  #特征总数
+    dataSetArray = np.array(dataSet)  #列表转化为数组
+    BestFeature = 0
+    EntropyLeast = 100
+    for i in range(FeatureSum):
+#        print(i)
+        EntropySum = 0.0
+        ClassifyList =   dataSetArray[:,i]
+        #print (ClassifyList)
+        ClassifySet = set(ClassifyList)
+#       print (ClassifySet)
+        for j in ClassifySet:
+            print (j)
+            TargetDataList = splitDataSet(dataSet, i ,j)
+            prob = len(TargetDataList)/float(len(dataSet))
+#            print (TargetDataList)
+#            EntropySum += prob*calcShannonEnt(TargetDataList)
+        if (EntropySum<EntropyLeast):
+            BestFeature = i
+#    print (BestFeature)
+    return BestFeature
+           
+    
 
 #==============================================================================
 
@@ -59,7 +82,5 @@ def splitDataSet(dataSet,axis,value):   #划分数据集
 
 if __name__ == "__main__":
     dataSet,Labels = createDataSet()
-    Entropy = calcShannonEnt(dataSet)
-    print (Entropy)
-    TargetDataList =splitDataSet(dataSet,0,0)
-    print (TargetDataList)
+    chooseBestFeatureToSplit(dataSet)
+    
